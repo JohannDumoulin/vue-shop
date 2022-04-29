@@ -13,6 +13,7 @@ const toProductContainerRefs = refs => ({
 export default ({
     setup() {
         const { hydrateProducts, getProducts, getFilteredProducts, setFilteredProducts } = useStore().products()
+        const { hydrateCategories, getCategories } = useStore().categories()
 
         const isLoading = ref(false);
         const inputValue = ref('');
@@ -20,6 +21,7 @@ export default ({
         onBeforeMount(() => {
             isLoading.value = true
             hydrateProducts().then(res => isLoading.value = false)
+            hydrateCategories().then(res => console.log(getCategories.value))
         })
 
         return {
