@@ -12,7 +12,10 @@ export default () => {
     const getFilteredProducts = computed(() => state.value.filteredProducts)
 
     const setFilteredProducts = string => {
-        state.value.filteredProducts = state.value.products.filter(product => product.title.includes(string.value))
+        state.value.filteredProducts = state.value.products
+            .filter(product => product.title
+                .toLowerCase()
+                .includes(string.value.toLowerCase()))
     }
 
     const hydrateProducts = () => fetchProducts().then((data) => {
