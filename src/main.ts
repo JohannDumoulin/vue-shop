@@ -1,5 +1,23 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+import Home from './components/Home.vue'
+import ProductContainer from './components/ProductContainer.vue'
+// @ts-ignore
+import { createRouter, createWebHistory } from 'vue-router'
 import './index.css'
 
-createApp(App).mount('#app')
+const routes = [
+    { path: '/', component: Home },
+    { path: '/products', component: ProductContainer },
+]
+
+const router = createRouter({
+    history: createWebHistory(),
+    routes, // short for `routes: routes`
+})
+
+// 5. Create and mount the root instance.
+const app = createApp(App)
+app.use(router)
+
+app.mount('#app')

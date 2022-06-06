@@ -4,9 +4,9 @@
 
 <template>
     <div class="w-1/3 flex justify-center mb-16">
-        <a
+        <router-link
             class="block overflow-hidden group w-xs"
-            href="/products/basic-tee"
+            :to="`/products/${product.id}`"
         >
             <div class="shadow-[0_4px_0_0_rgba(0,0,0,1)] border-2 border-black rounded-3xl overflow-hidden">
                 <img
@@ -29,6 +29,6 @@
       </span>
                 </p>
             </div>
-        </a>
+        </router-link>
     </div>
 </template>

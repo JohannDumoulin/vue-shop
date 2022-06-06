@@ -20,7 +20,9 @@ export default ({
 
         onBeforeMount(() => {
             isLoading.value = true
-            hydrateProducts().then(res => isLoading.value = false)
+            hydrateProducts().then(res => {
+                isLoading.value = false
+            })
             hydrateCategories().then(res => console.log(getCategories.value))
         })
 
@@ -48,7 +50,7 @@ export default ({
                v-model="inputValue"
                @keyup="setFilteredProducts(productContainerRefs.inputValue)"
                placeholder="Rechercher"
-               class="bg-gray-100 px-4 py-2 rounded-xl">
+               class="bg-gray-100 px-4 py-2 rounded-xl magneticEffect">
 
         <div class="p-8 flex flex-wrap">
             <ProductItem v-for="product in getFilteredProducts" :product="product"/>
