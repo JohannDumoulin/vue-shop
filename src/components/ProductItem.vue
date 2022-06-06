@@ -6,7 +6,7 @@
     <div class="w-1/3 flex justify-center mb-16">
         <router-link
             class="block overflow-hidden group w-xs"
-            :to="`/products/${product.id}`"
+            :to="`/product/${product.id}`"
         >
             <div class="shadow-[0_4px_0_0_rgba(0,0,0,1)] border-2 border-black rounded-3xl overflow-hidden">
                 <img

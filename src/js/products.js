@@ -23,10 +23,17 @@ export default () => {
         state.value.filteredProducts = data
     })
 
+    const getProduct = (id) => {
+        if (Object.keys(state.value.products).length === 0) hydrateProducts().then(() => {
+            console.log(state.value.products);
+        });
+    }
+
     return {
         getProducts,
         getFilteredProducts,
         setFilteredProducts,
         hydrateProducts,
+        getProduct
     }
 };

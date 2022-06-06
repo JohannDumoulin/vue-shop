@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import Home from './components/Home.vue'
 import ProductContainer from './components/ProductContainer.vue'
+import ProductPage from './components/ProductPage.vue'
 // @ts-ignore
 import { createRouter, createWebHistory } from 'vue-router'
 import './index.css'
@@ -9,6 +10,7 @@ import './index.css'
 const routes = [
     { path: '/', component: Home },
     { path: '/products', component: ProductContainer },
+    { path: '/product/:id', component: ProductPage, props: true },
 ]
 
 const router = createRouter({
