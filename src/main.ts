@@ -1,4 +1,5 @@
 import { createApp } from 'vue'
+import { createPinia } from 'pinia'
 import App from './App.vue'
 import Home from './components/Home.vue'
 import ProductContainer from './components/ProductContainer.vue'
@@ -21,5 +22,6 @@ const router = createRouter({
 // 5. Create and mount the root instance.
 const app = createApp(App)
 app.use(router)
+app.use(createPinia())
 
 app.mount('#app')

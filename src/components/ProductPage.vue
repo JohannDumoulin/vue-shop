@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
-import useStore from './../js/store.js'
+// import useStore from './../js/store.js'
 
-const { getProduct } = useStore().products()
+// const { isLoaded, getProduct } = useStore().products()
 
 const route = useRoute()
 
-getProduct("1")
+// getProduct("1")
 
 console.log(route.params.id);
+// console.log(isLoaded);
 </script>
 
 <template>

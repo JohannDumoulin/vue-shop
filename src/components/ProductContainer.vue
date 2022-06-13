@@ -1,61 +1,41 @@
-<script>
+<script setup>
+import { storeToRefs } from 'pinia'
 import ProductItem from './ProductItem.vue'
 import { onBeforeMount, ref } from 'vue'
-import useStore from './../js/store'
+import { useProducts } from '../js/productsStore'
+import { useCategories } from '../js/categoriesStore'
 
-const toProductContainerRefs = refs => ({
-    ...refs,
-    productContainerRefs: {
-        ...refs
-    }
+const productStore = useProducts()
+const { isLoaded, filteredProducts } = storeToRefs(productStore)
+const { hydrateProducts, setFilteredProducts } = productStore
+
+const categoriesStore = useCategories()
+const { categories } = storeToRefs(categoriesStore)
+const { hydrateCategories } = categoriesStore
+
+const inputValue = ref('');
+
+onBeforeMount(() => {
+    if (isLoaded.value) return
+    hydrateProducts()
+    hydrateCategories()
 })
-
-export default ({
-    setup() {
-        const { hydrateProducts, getProducts, getFilteredProducts, setFilteredProducts } = useStore().products()
-        const { hydrateCategories, getCategories } = useStore().categories()
-
-        const isLoading = ref(false);
-        const inputValue = ref('');
-
-        onBeforeMount(() => {
-            isLoading.value = true
-            hydrateProducts().then(res => {
-                isLoading.value = false
-            })
-            hydrateCategories().then(res => console.log(getCategories.value))
-        })
-
-        return {
-            getProducts,
-            getFilteredProducts,
-            setFilteredProducts,
-            ...toProductContainerRefs({
-                isLoading,
-                inputValue
-            }),
-        };
-    },
-    components: {
-        ProductItem
-    },
-});
 
 </script>
 
 <template>
-    <div v-if="isLoading"> Loading ... </div>
-    <div v-else class="p-8">
+    <div v-if="isLoaded" class="p-8">
         <input type="text"
                v-model="inputValue"
-               @keyup="setFilteredProducts(productContainerRefs.inputValue)"
+               @keyup="setFilteredProducts(inputValue)"
                placeholder="Rechercher"
                class="bg-gray-100 px-4 py-2 rounded-xl magneticEffect">
 
         <div class="p-8 flex flex-wrap">
-            <ProductItem v-for="product in getFilteredProducts" :product="product"/>
+            <ProductItem v-for="product in filteredProducts" :product="product"/>
         </div>
     </div>
+    <div v-else> Loading ... </div>
 </template>
 
 
