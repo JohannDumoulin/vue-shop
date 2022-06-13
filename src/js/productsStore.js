@@ -23,7 +23,6 @@ export const useProducts = defineStore('products', {
                 this.products = data
                 this.filteredProducts = data
                 this.isLoaded = true
-                console.log(this.isLoaded);
             })
         },
 
