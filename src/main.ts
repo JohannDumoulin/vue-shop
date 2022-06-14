@@ -11,7 +11,7 @@ import './index.css'
 const routes = [
     { path: '/', component: Home },
     { path: '/products', component: ProductContainer },
-    { path: '/product/:id', component: ProductPage, props: true },
+    { path: '/product/:id', component: ProductPage },
 ]
 
 const router = createRouter({

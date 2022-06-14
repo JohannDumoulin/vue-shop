@@ -1,14 +1,9 @@
 <script setup lang="ts">
-
+import Header from './components/Header.vue'
 </script>
 
 <template>
-    <ul>
-        <!-- use the router-link component for navigation. -->
-        <!-- specify the link by passing the `to` prop. -->
-        <!-- `<router-link>` will render an `<a>` tag with the correct `href` attribute -->
-        <router-link to="/">Go to Home</router-link>
-    </ul>
+    <Header/>
     <router-view></router-view>
 </template>
 

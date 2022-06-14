@@ -2,27 +2,26 @@ import { defineStore } from 'pinia'
 import { toRaw } from 'vue'
 import fetchProducts from '../api/fetchProducts'
 
-export const useProducts = defineStore('products', {
+export const useProducts = defineStore('main', {
     state: () => {
         return {
+            isProductsLoaded: false,
             products: [],
             filteredProducts: [],
-            isLoaded: false
+            categories: [],
         }
     },
     getters: {
         getProducts: (state) => state.products,
         getFilteredProducts: (state) => state.filteredProducts,
-        getProductsById: (state) => {
-            return (productId) => state.products.find((product) => product.id === productId)
-        }
+        getCategories: (state) => state.categories,
     },
     actions: {
-        hydrateProducts() {
-            fetchProducts().then((data) => {
+        async hydrateProducts() {
+            await fetchProducts().then((data) => {
                 this.products = data
                 this.filteredProducts = data
-                this.isLoaded = true
+                this.isProductsLoaded = true
             })
         },
 
@@ -32,11 +31,5 @@ export const useProducts = defineStore('products', {
                     .toLowerCase()
                     .includes(string))
         },
-
-        // getProduct(id) {
-        //     if (Object.keys(this.products).length === 0) this.hydrateProducts().then(() => {
-        //         console.log(this.products);
-        //     });
-        // }
     }
 });

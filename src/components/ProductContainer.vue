@@ -6,25 +6,24 @@ import { useProducts } from '../js/productsStore'
 import { useCategories } from '../js/categoriesStore'
 
 const productStore = useProducts()
-const { isLoaded, filteredProducts } = storeToRefs(productStore)
+const { isProductsLoaded, filteredProducts } = storeToRefs(productStore)
 const { hydrateProducts, setFilteredProducts } = productStore
 
 const categoriesStore = useCategories()
-const { categories } = storeToRefs(categoriesStore)
+const { isCategoriesLoaded, categories } = storeToRefs(categoriesStore)
 const { hydrateCategories } = categoriesStore
 
 const inputValue = ref('');
 
 onBeforeMount(() => {
-    if (isLoaded.value) return
-    hydrateProducts()
-    hydrateCategories()
+    if (!isProductsLoaded.value) hydrateProducts()
+    if (!isCategoriesLoaded.value) hydrateCategories()
 })
 
 </script>
 
 <template>
-    <div v-if="isLoaded" class="p-8">
+    <div v-if="isProductsLoaded && isCategoriesLoaded" class="p-8">
         <input type="text"
                v-model="inputValue"
                @keyup="setFilteredProducts(inputValue)"

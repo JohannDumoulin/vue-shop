@@ -4,6 +4,7 @@ import fetchCategories from '../api/fetchCategories'
 export const useCategories = defineStore('categories', {
     state: () => {
         return {
+            isCategoriesLoaded: false,
             categories: [],
         }
     },
@@ -11,9 +12,10 @@ export const useCategories = defineStore('categories', {
         getCategories: (state) => state.categories,
     },
     actions: {
-        hydrateCategories() {
+        async hydrateCategories() {
             fetchCategories().then((data) => {
                 this.categories = data
+                this.isCategoriesLoaded = true
             })
         },
     }

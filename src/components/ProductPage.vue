@@ -1,21 +1,25 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
-// import useStore from './../js/store.js'
-
-// const { isLoaded, getProduct } = useStore().products()
+import { onBeforeMount, ref } from "vue";
+import fetchProductById from '../api/fetchProductById'
 
 const route = useRoute()
+const product = ref({})
+const isProductLoaded = ref(false)
 
-// getProduct("1")
+onBeforeMount(() => {
+    fetchProductById(~~route.params.id).then(r => {
+        product.value = r
+        isProductLoaded.value = true
+    })
+})
 
-console.log(route.params.id);
-// console.log(isLoaded);
 </script>
 
 <template>
     <router-link to="/products">Retour vers les produits</router-link>
 
-    <section>
+    <section v-if="isProductLoaded">
         <div class="relative max-w-screen-xl px-4 py-8 mx-auto">
             <div class="grid items-start grid-cols-1 gap-8 md:grid-cols-2">
                 <div class="grid grid-cols-2 gap-4 md:grid-cols-1">
@@ -23,40 +27,16 @@ console.log(route.params.id);
                         <img
                             alt="Mobile Phone Stand"
                             class="object-cover rounded-xl"
-                            src="https://www.morbius.movie/images/gallery/img2.jpg"
+                            :src="product.image"
                         />
                     </div>
 
                     <div class="grid grid-cols-2 gap-4 lg:mt-4">
-                        <div class="aspect-w-1 aspect-h-1">
+                        <div class="aspect-w-1 aspect-h-1" v-for="img in 4">
                             <img
                                 alt="Mobile Phone Stand"
                                 class="object-cover rounded-xl"
-                                src="https://www.morbius.movie/images/gallery/img2.jpg"
-                            />
-                        </div>
-
-                        <div class="aspect-w-1 aspect-h-1">
-                            <img
-                                alt="Mobile Phone Stand"
-                                class="object-cover rounded-xl"
-                                src="https://www.morbius.movie/images/gallery/img2.jpg"
-                            />
-                        </div>
-
-                        <div class="aspect-w-1 aspect-h-1">
-                            <img
-                                alt="Mobile Phone Stand"
-                                class="object-cover rounded-xl"
-                                src="https://www.morbius.movie/images/gallery/img2.jpg"
-                            />
-                        </div>
-
-                        <div class="aspect-w-1 aspect-h-1">
-                            <img
-                                alt="Mobile Phone Stand"
-                                class="object-cover rounded-xl"
-                                src="https://www.morbius.movie/images/gallery/img2.jpg"
+                                :src="product.image"
                             />
                         </div>
                     </div>
@@ -72,7 +52,7 @@ console.log(route.params.id);
                     <div class="flex justify-between mt-8">
                         <div class="max-w-[35ch]">
                             <h1 class="text-2xl font-bold">
-                                Fun Product That Does Something Cool
+                                {{ product.title }}
                             </h1>
 
                             <p class="mt-0.5 text-sm">Highest Rated Product</p>
@@ -135,7 +115,7 @@ console.log(route.params.id);
                             </div>
                         </div>
 
-                        <p class="text-lg font-bold">$119.99</p>
+                        <p class="text-lg font-bold">${{ product.price }}</p>
                     </div>
 
                     <details class="relative mt-4 group">
@@ -143,10 +123,7 @@ console.log(route.params.id);
                             <div>
                                 <div class="prose max-w-none group-open:hidden">
                                     <p>
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa
-                                        veniam dicta beatae eos ex error culpa delectus rem tenetur,
-                                        architecto quam nesciunt, dolor veritatis nisi minus
-                                        inventore, rerum at recusandae?
+                                        {{ product.description }}
                                     </p>
                                 </div>
 
@@ -187,6 +164,7 @@ console.log(route.params.id);
                                             name="color"
                                             id="color_tt"
                                             class="sr-only peer"
+                                            checked
                                         />
 
                                         <span
@@ -240,6 +218,7 @@ console.log(route.params.id);
                                             name="size"
                                             id="size_xs"
                                             class="sr-only peer"
+                                            checked
                                         />
 
                                         <span
@@ -337,6 +316,8 @@ console.log(route.params.id);
             </div>
         </div>
     </section>
+
+    <div v-else> Loading ... </div>
 </template>
 
 <style>
