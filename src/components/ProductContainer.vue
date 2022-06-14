@@ -1,7 +1,10 @@
-<script setup>
+<script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import ProductItem from './ProductItem.vue'
 import { onBeforeMount, ref } from 'vue'
+
+import ProductItem from './ProductItem.vue'
+import Loader from './Loader.vue'
+
 import { useProducts } from '../js/productsStore'
 import { useCategories } from '../js/categoriesStore'
 
@@ -34,7 +37,5 @@ onBeforeMount(() => {
             <ProductItem v-for="product in filteredProducts" :product="product"/>
         </div>
     </div>
-    <div v-else> Loading ... </div>
+    <Loader v-else />
 </template>
-
-

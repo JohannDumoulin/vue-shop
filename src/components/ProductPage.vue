@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
 import { onBeforeMount, ref } from "vue";
+import Loader from './Loader.vue'
 import fetchProductById from '../api/fetchProductById'
 
 const route = useRoute()
@@ -317,7 +318,7 @@ onBeforeMount(() => {
         </div>
     </section>
 
-    <div v-else> Loading ... </div>
+    <Loader v-else />
 </template>
 
 <style>
