@@ -2,9 +2,9 @@
 import { storeToRefs } from 'pinia'
 import { onBeforeMount, ref } from 'vue'
 
-import ProductItem from './ProductItem.vue'
-import Loader from './Loader.vue'
-import Breadcrumb from './Breadcrumb.vue'
+import ProductItem from '../components/ProductItem.vue'
+import Loader from '../components/Loader.vue'
+import Breadcrumb from '../components/Breadcrumb.vue'
 
 import { useProducts } from '../js/productsStore'
 import { useCategories } from '../js/categoriesStore'

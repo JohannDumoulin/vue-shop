@@ -1,8 +1,8 @@
 <script setup>
 import { useRoute } from 'vue-router'
 import { onBeforeMount, ref } from "vue";
-import Loader from './Loader.vue'
-import Breadcrumb from './Breadcrumb.vue'
+import Loader from '../components/Loader.vue'
+import Breadcrumb from '../components/Breadcrumb.vue'
 import fetchProductById from '../api/fetchProductById'
 
 const route = useRoute()
