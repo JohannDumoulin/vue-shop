@@ -4,6 +4,7 @@ import { onBeforeMount, ref } from 'vue'
 
 import ProductItem from './ProductItem.vue'
 import Loader from './Loader.vue'
+import Breadcrumb from './Breadcrumb.vue'
 
 import { useProducts } from '../js/productsStore'
 import { useCategories } from '../js/categoriesStore'
@@ -18,6 +19,10 @@ const { hydrateCategories } = categoriesStore
 
 const inputValue = ref('');
 
+const path = [{
+    name: 'Products',
+}]
+
 onBeforeMount(() => {
     if (!isProductsLoaded.value) hydrateProducts()
     if (!isCategoriesLoaded.value) hydrateCategories()
@@ -27,6 +32,7 @@ onBeforeMount(() => {
 
 <template>
     <div v-if="isProductsLoaded && isCategoriesLoaded" class="p-8">
+        <Breadcrumb :path="path"/>
         <input type="text"
                v-model="inputValue"
                @keyup="setFilteredProducts(inputValue)"

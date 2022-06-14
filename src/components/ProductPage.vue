@@ -1,16 +1,27 @@
-<script setup lang="ts">
+<script setup>
 import { useRoute } from 'vue-router'
 import { onBeforeMount, ref } from "vue";
 import Loader from './Loader.vue'
+import Breadcrumb from './Breadcrumb.vue'
 import fetchProductById from '../api/fetchProductById'
 
 const route = useRoute()
 const product = ref({})
 const isProductLoaded = ref(false)
+const path = ref([])
 
 onBeforeMount(() => {
     fetchProductById(~~route.params.id).then(r => {
         product.value = r
+        path.value = [
+            {
+                name: 'Products',
+                path: '/products'
+            },
+            {
+                name: product.value.title
+            }
+        ]
         isProductLoaded.value = true
     })
 })
@@ -18,9 +29,8 @@ onBeforeMount(() => {
 </script>
 
 <template>
-    <router-link to="/products">Retour vers les produits</router-link>
-
-    <section v-if="isProductLoaded">
+    <section v-if="isProductLoaded" class="p-8">
+        <Breadcrumb :path="path"/>
         <div class="relative max-w-screen-xl px-4 py-8 mx-auto">
             <div class="grid items-start grid-cols-1 gap-8 md:grid-cols-2">
                 <div class="grid grid-cols-2 gap-4 md:grid-cols-1">
